@@ -6,13 +6,14 @@ StatBarRibbon <- ggplot2::ggproto(
   setup_data = function(data, params) {
     data <- data %>%
       dplyr::group_by(PANEL, group) %>%
+      dplyr::arrange(x) %>%
       dplyr::mutate(x_next=dplyr::lead(x), y_next=dplyr::lead(y)) %>%
       dplyr::filter(!is.na(x_next))
     data
   },
-  compute_panel = function(data, scales) {
+  compute_panel = function(data, scales, interp_res) {
     out <- mapply(ggbump::sigmoid, data$x, data$x_next, data$y, data$y_next, 
-                  n=abs(data$x-data$x_next)+1, SIMPLIFY = FALSE) %>%
+                  n=abs(data$x-data$x_next)*interp_res+1, SIMPLIFY = FALSE) %>%
       mapply(FUN = cbind, fill=data$fill, PANEL=data$PANEL, 
              group=data$group, SIMPLIFY = FALSE) %>%
       do.call(what = "rbind") %>%
@@ -39,6 +40,9 @@ StatBarRibbon <- ggplot2::ggproto(
 #'
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_bar
+#' @param interp_res The resolution at which the data should be interpolated,
+#' in units of # per y-axis value. 1 is a good fit for depth data, and 10-20 is
+#' good for latitudinal data.
 #'
 #' @export
 #'
@@ -54,11 +58,11 @@ StatBarRibbon <- ggplot2::ggproto(
 #   coord_flip()
 geom_bar_ribbon <- function(mapping = NULL, data = NULL, stat = "identity",
                             position = "identity", na.rm = FALSE, show.legend = NA,
-                            inherit.aes = TRUE, ...) {
+                            inherit.aes = TRUE, interp_res = 1, ...) {
   ggplot2::layer(
     stat = StatBarRibbon, data = data, mapping = mapping, geom = "ribbon",
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
+    params = list(interp_res = interp_res, na.rm = na.rm, ...)
   )
 }
 
