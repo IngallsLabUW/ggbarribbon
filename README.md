@@ -11,29 +11,22 @@ axis often results in overplotting or weird spacing issues when the data
 could instead be interpolated and show up more nicely.
 
 ``` r
+# devtools::install_github("https://github.com/IngallsLabUW/ggbarribbon")
+library(ggbarribbon)
+
 metab_df <- data.frame(
   metab=LETTERS[1:10], 
   depth=rep(c(0, 5, 25, 125, 175), each=10),
   area=runif(50)
 )
-
-knitr::kable(head(metab_df))
 ```
-
-| metab | depth |      area |
-|:------|------:|----------:|
-| A     |     0 | 0.2955639 |
-| B     |     0 | 0.4168895 |
-| C     |     0 | 0.2491902 |
-| D     |     0 | 0.4571647 |
-| E     |     0 | 0.6282155 |
-| F     |     0 | 0.9400581 |
 
 For example, the barplot below does a nice job of conveying changes in
 relative metabolite abundance over depth, but the spacing on the y axis
 is awful and results in a large amount of whitespace.
 
 ``` r
+library(ggplot2)
 ggbar <- ggplot(metab_df) +
   geom_bar(aes(y=area, x=-depth, fill=metab), stat = "identity", 
            position = position_fill(reverse = TRUE), color="black") +
