@@ -4,6 +4,9 @@
 StatBarRibbon <- ggplot2::ggproto(
   "StatBarRibbon", ggplot2::Stat,
   setup_data = function(data, params) {
+    if(class(data$x)[1]=="mapped_discrete"){
+      stop("x and y aesthetics must be continuous, not factors")
+    }
     data <- data %>%
       dplyr::group_by(PANEL, group) %>%
       dplyr::arrange(x) %>%
