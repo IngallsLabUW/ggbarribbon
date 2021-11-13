@@ -1,12 +1,21 @@
 Package: ggbarribbon
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Interpolated Stacked Bar Plots with ggplot2
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: William Kumler
+Maintainer: William Kumler <wkumler@uw.edu>
+Description: This geom interpolates smoothly between the values that would normally be 
+    provided to geom_bar using a sigmoid curve.Often, this is useful when a 
+    stacked bar plot is desired but the values along the perpindicular axis are 
+    numeric rather than discrete. A numeric axis often results in overplotting 
+    or weird spacing issues when the data could instead be interpolated and 
+    show up more nicely.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    ggplot2,
+    dplyr,
+    magrittr,
+    ggbump
 RoxygenNote: 7.1.2

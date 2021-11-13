@@ -6,7 +6,7 @@ StatBarRibbon <- ggplot2::ggproto(
   setup_data = function(data, params) {
     data <- data %>%
       dplyr::group_by(PANEL, group) %>%
-      dplyr::mutate(x_next=lead(x), y_next=lead(y)) %>%
+      dplyr::mutate(x_next=dplyr::lead(x), y_next=dplyr::lead(y)) %>%
       dplyr::filter(!is.na(x_next))
     data
   },
@@ -40,19 +40,18 @@ StatBarRibbon <- ggplot2::ggproto(
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_bar
 #'
-#' @return
 #' @export
 #'
 #' @examples
-#' library(ggplot2)
-#' metab_df <- data.frame(
-#' metab=LETTERS[1:10], 
-#' depth=rep(c(0, 5, 25, 125, 175), each=10),
-#' area=runif(50)
-#' )
-#' ggplot(metab_df) +
-#' geom_bar_ribbon(aes(y=area, x=-depth, fill=metab), color="black") +
-#' coord_flip()
+# library(ggplot2)
+# metab_df <- data.frame(
+#   metab=LETTERS[1:10],
+#   depth=rep(c(0, 5, 25, 125, 175), each=10),
+#   area=runif(50)
+# )
+# ggplot(metab_df) +
+#   geom_bar_ribbon(aes(y=area, x=-depth, fill=metab), color="black") +
+#   coord_flip()
 geom_bar_ribbon <- function(mapping = NULL, data = NULL, stat = "identity",
                             position = "identity", na.rm = FALSE, show.legend = NA,
                             inherit.aes = TRUE, ...) {
@@ -62,3 +61,15 @@ geom_bar_ribbon <- function(mapping = NULL, data = NULL, stat = "identity",
     params = list(na.rm = na.rm, ...)
   )
 }
+
+#' Pipe operator
+#'
+#' See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
+#'
+#' @name %>%
+#' @rdname pipe
+#' @keywords internal
+#' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
+NULL

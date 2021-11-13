@@ -61,9 +61,6 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 }
-\value{
-
-}
 \description{
 This geom interpolates smoothly between the values that would normally be 
 provided to geom_bar using a sigmoid curve.Often, this is useful when a 
@@ -75,11 +72,11 @@ show up more nicely.
 \examples{
 library(ggplot2)
 metab_df <- data.frame(
-metab=LETTERS[1:10], 
-depth=rep(c(0, 5, 25, 125, 175), each=10),
-area=runif(50)
+  metab=LETTERS[1:10], 
+  depth=rep(c(0, 5, 25, 125, 175), each=10),
+  area=runif(50)
 )
 ggplot(metab_df) +
-geom_bar_ribbon(aes(y=area, x=-depth, fill=metab), color="black") +
-coord_flip()
+  geom_bar_ribbon(aes(y=area, x=-depth, fill=metab), color="black") +
+  coord_flip()
 }
