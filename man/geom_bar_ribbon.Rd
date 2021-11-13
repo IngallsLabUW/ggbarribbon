@@ -12,6 +12,7 @@ geom_bar_ribbon(
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE,
+  interp_res = 1,
   ...
 )
 }
@@ -56,6 +57,10 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
+\item{interp_res}{The resolution at which the data should be interpolated,
+in units of # per y-axis value. 1 is a good fit for depth data, and 10-20 is
+good for latitudinal data.}
+
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
@@ -68,15 +73,4 @@ stacked bar plot is desired but the values along the perpindicular axis are
 numeric rather than discrete. A numeric axis often results in overplotting 
 or weird spacing issues when the data could instead be interpolated and 
 show up more nicely.
-}
-\examples{
-library(ggplot2)
-metab_df <- data.frame(
-  metab=LETTERS[1:10], 
-  depth=rep(c(0, 5, 25, 125, 175), each=10),
-  area=runif(50)
-)
-ggplot(metab_df) +
-  geom_bar_ribbon(aes(y=area, x=-depth, fill=metab), color="black") +
-  coord_flip()
 }
