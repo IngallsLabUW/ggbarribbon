@@ -1,4 +1,8 @@
 # Code for ggbarribbon package
+# To-do:
+# Fix weird gaps in rekheal far right side
+# Implement factorial x-axis(?)
+
 
 # StatBarRibbon ----
 StatBarRibbon <- ggplot2::ggproto(
